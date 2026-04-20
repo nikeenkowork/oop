@@ -24,7 +24,7 @@ class Category:
     """
 
     category_count = 0  # общее количество категорий
-    product_count = 0   # общее количество товаров
+    product_count = 0  # общее количество товаров
 
     def __init__(self, name, description, products):
         """
