@@ -1,4 +1,4 @@
-from app.main import Category, Product
+from src.main import Category, Product
 
 
 def test_products_attributes():
