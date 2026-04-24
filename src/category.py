@@ -31,9 +31,6 @@ class Category:
     def add_product(self, product):
         """
         Добавляет товар в категорию и обновляет общий счётчик товаров.
-
-        :param product: Объект класса Product
-        :type product: Product
         """
         self.__products.append(product)
         Category.product_count += 1
@@ -41,17 +38,11 @@ class Category:
     @property
     def products(self):
         """
-        Возвращает список товаров категории в виде форматированной строки.
-
-        Каждый товар выводится в формате:
-        Название продукта, цена руб. Остаток: количество шт.
-
-        :return: Строка со списком товаров
-        :rtype: str
+        Возвращает список товаров категории в виде строки.
+        Формат:
+        Название, цена руб. Остаток: количество шт.
         """
-        result = []
-        for product in self.__products:
-            result.append(
-                f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт."
-            )
-        return "\n".join(result)
+        return "\n".join(
+            f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт."
+            for product in self.__products
+        )
