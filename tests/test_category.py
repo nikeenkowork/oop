@@ -60,3 +60,36 @@ def test_empty_category_products():
     category = Category("Empty", "No products", [])
 
     assert category.products == ""
+
+
+# -----------------------------
+# ТЕСТЫ НА __str__
+# -----------------------------
+
+
+def test_product_str():
+    """Проверка магического метода __str__ у Product"""
+    product = Product("iPhone 15", "512GB", 210000, 8)
+
+    expected = "iPhone 15, 210000 руб. (остаток: 8 шт.)"
+    assert str(product) == expected
+
+
+def test_category_str_empty():
+    """Проверка __str__ у пустой категории"""
+    category = Category("Смартфоны", "Описание", [])
+
+    expected_result = "Смартфоны, количество продуктов: 0 шт."
+
+    assert str(category) == expected_result
+
+
+def test_category_str_with_products():
+    """Проверка __str__ у категории с продуктами"""
+    p1 = Product("A", "desc", 100, 2)
+    p2 = Product("B", "desc", 200, 3)
+
+    category = Category("Тест", "Описание", [p1, p2])
+
+    expected = "Тест, количество продуктов: 5 шт."
+    assert str(category) == expected

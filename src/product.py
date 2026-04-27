@@ -53,3 +53,29 @@ class Product:
             product_data["price"],
             product_data["quantity"],
         )
+
+    def __str__(self):
+        """
+        Возвращает строковое представление товара.
+
+        Формат:
+        Название, X руб. Остаток: Y шт.
+
+        :return: str
+        """
+        return f"{self.name}, {self.price} руб. (остаток: {self.quantity} шт.)"
+
+    def __add__(self, other):
+        """
+        Складывает два товара по общей стоимости на складе.
+
+        Формула:
+        price * quantity + price * quantity
+
+        :param other: Product — второй товар
+        :return: float/int — общая стоимость двух товаров
+        """
+        if not isinstance(other, Product):
+            return NotImplemented
+
+        return (self.price * self.quantity) + (other.price * other.quantity)
