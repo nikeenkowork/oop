@@ -1,3 +1,6 @@
+from src.product import Product
+
+
 class Category:
     """
     Класс категории товаров.
@@ -31,7 +34,17 @@ class Category:
     def add_product(self, product):
         """
         Добавляет товар в категорию и обновляет общий счётчик товаров.
+
+        Можно добавлять только объекты Product и его наследников.
+
+        :param product: Объект товара.
+        :raises TypeError: Если передан не Product.
         """
+        if not isinstance(product, Product):
+            raise TypeError(
+                "Можно добавлять только объекты Product или его наследников"
+            )
+
         self.__products.append(product)
         Category.product_count += 1
 
