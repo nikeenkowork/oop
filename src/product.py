@@ -1,4 +1,59 @@
-class Product:
+from abc import ABC, abstractmethod
+
+
+class PrintMixin:
+    """
+    Миксин для вывода информации о созданном объекте.
+    """
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        print(repr(self))
+
+    def __repr__(self):
+        """
+        Возвращает информацию о классе и параметрах объекта.
+        """
+        return f"{self.__class__.__name__}(" f"{self.__dict__}" f")"
+
+
+class BaseProduct(ABC):
+    """
+    Абстрактный базовый класс для всех товаров.
+    """
+
+    @property
+    @abstractmethod
+    def price(self):
+        """
+        Возвращает цену товара.
+        """
+        pass
+
+    @price.setter
+    @abstractmethod
+    def price(self, new_price):
+        """
+        Устанавливает цену товара.
+        """
+        pass
+
+    @abstractmethod
+    def __str__(self):
+        """
+        Возвращает строковое представление товара.
+        """
+        pass
+
+    @abstractmethod
+    def __add__(self, other):
+        """
+        Складывает стоимость товаров.
+        """
+        pass
+
+
+class Product(PrintMixin, BaseProduct):
     """
     Базовый класс для представления товара.
     """
@@ -6,23 +61,18 @@ class Product:
     def __init__(self, name, description, price, quantity):
         """
         Инициализирует объект товара.
-
-        :param name: Название товара.
-        :param description: Описание товара.
-        :param price: Цена товара.
-        :param quantity: Количество товара на складе.
         """
         self.name = name
         self.description = description
         self.__price = price
         self.quantity = quantity
 
+        super().__init__()
+
     @property
     def price(self):
         """
         Возвращает цену товара.
-
-        :return: Цена товара.
         """
         return self.__price
 
@@ -30,8 +80,6 @@ class Product:
     def price(self, new_price):
         """
         Устанавливает новую цену товара.
-
-        :param new_price: Новое значение цены.
         """
         if new_price > 0:
             self.__price = new_price
@@ -41,23 +89,12 @@ class Product:
     def __str__(self):
         """
         Возвращает строковое представление товара.
-
-        Формат:
-        Название, X руб. (остаток: Y шт.)
-
-        :return: Строковое представление товара.
         """
         return f"{self.name}, {self.price} руб. (остаток: {self.quantity} шт.)"
 
     def __add__(self, other):
         """
         Складывает два товара по общей стоимости на складе.
-
-        Сложение возможно только для объектов одного класса.
-
-        :param other: Второй товар
-        :return: Общая стоимость
-        :raises TypeError: если классы разные
         """
         if type(self) is not type(other):
             raise TypeError("Нельзя складывать товары разных классов")
@@ -68,25 +105,24 @@ class Product:
 class Smartphone(Product):
     """
     Класс для представления смартфона.
-    Наследуется от класса Product.
     """
 
     def __init__(
-        self, name, description, price, quantity, efficiency, model, memory, color
+        self,
+        name,
+        description,
+        price,
+        quantity,
+        efficiency,
+        model,
+        memory,
+        color,
     ):
         """
         Инициализирует объект смартфона.
-
-        :param name: Название смартфона.
-        :param description: Описание смартфона.
-        :param price: Цена смартфона.
-        :param quantity: Количество смартфонов на складе.
-        :param efficiency: Производительность смартфона.
-        :param model: Модель смартфона.
-        :param memory: Объем встроенной памяти.
-        :param color: Цвет смартфона.
         """
         super().__init__(name, description, price, quantity)
+
         self.efficiency = efficiency
         self.model = model
         self.memory = memory
@@ -96,24 +132,23 @@ class Smartphone(Product):
 class LawnGrass(Product):
     """
     Класс для представления газонной травы.
-    Наследуется от класса Product.
     """
 
     def __init__(
-        self, name, description, price, quantity, country, germination_period, color
+        self,
+        name,
+        description,
+        price,
+        quantity,
+        country,
+        germination_period,
+        color,
     ):
         """
         Инициализирует объект газонной травы.
-
-        :param name: Название травы.
-        :param description: Описание травы.
-        :param price: Цена травы.
-        :param quantity: Количество упаковок на складе.
-        :param country: Страна-производитель.
-        :param germination_period: Срок прорастания.
-        :param color: Цвет травы.
         """
         super().__init__(name, description, price, quantity)
+
         self.country = country
         self.germination_period = germination_period
         self.color = color
